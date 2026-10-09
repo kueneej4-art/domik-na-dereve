@@ -396,8 +396,12 @@ python3 -m venv venv
 ./venv/bin/pip install -q vk_api
 
 echo
-read -rsp "Вставьте КЛЮЧ ДОСТУПА группы (символы не отображаются) и нажмите Enter: " TOKEN; echo
-read -rp "Короткие адреса админов для уведомлений через пробел [zhivi_po_lubvi]: " ADMINS
+if [ -z "$TOKEN" ]; then
+  read -rsp "Вставьте КЛЮЧ ДОСТУПА группы (символы не отображаются) и нажмите Enter: " TOKEN; echo
+fi
+if [ -z "$ADMINS" ]; then
+  read -rp "Короткие адреса админов для уведомлений через пробел [zhivi_po_lubvi]: " ADMINS
+fi
 ADMINS=${ADMINS:-zhivi_po_lubvi}
 
 ADMIN_IDS=$(TOKEN="$TOKEN" ADMINS="$ADMINS" ./venv/bin/python - <<'PYEOF'
